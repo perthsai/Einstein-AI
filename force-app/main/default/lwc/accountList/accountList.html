@@ -1,0 +1,45 @@
+<template>
+    <div class="card-container">
+        <div class="header">
+            <h1 class="header-title">My Accounts</h1>
+        </div>
+
+        <div class="body">
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+            </template>
+
+            <template if:true={hasError}>
+                <div class="error-message">
+                    <p>{errorMessage}</p>
+                </div>
+            </template>
+
+            <template if:true={hasAccounts}>
+                <template for:each={enrichedAccounts} for:item="account">
+                    <div key={account.Id} class="account-card">
+                        <div class="avatar" style={account.avatarStyle}>
+                            {account.initial}
+                        </div>
+                        <div class="account-left">
+                            <p class="account-name">{account.Name}</p>
+                            <p class="account-detail">Industry: {account.Industry}</p>
+                            <p class="account-detail">Phone: {account.Phone}</p>
+                        </div>
+                        <div class="account-right">
+                            <p class="revenue-label">Annual Revenue</p>
+                            <p class="revenue-amount">{account.formattedRevenue}</p>
+                            <p class="rating-row">
+                                Rating &nbsp;<span class={account.ratingClass}>{account.Rating} {account.ratingEmoji}</span>
+                            </p>
+                        </div>
+                    </div>
+                </template>
+            </template>
+        </div>
+
+        <div class="footer">
+            Showing {shownCount} of {totalCount} Accounts
+        </div>
+    </div>
+</template>
